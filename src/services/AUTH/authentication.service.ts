@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 const current_user = 'current_user';
 
@@ -12,7 +11,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  constructor(private router: Router, private loginMutationService: any) {
+  constructor(private router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem(current_user)!)
     );
@@ -20,7 +19,8 @@ export class AuthenticationService {
   }
 
   public get currentUserValue(): any {
-    return this.currentUserSubject.value;
+    return true;
+    //return this.currentUserSubject.value;
   }
 
   loginFromSignup(user: any) {
@@ -30,23 +30,23 @@ export class AuthenticationService {
   }
 
   login(data: any) {
-    if (data && data.email && data.password) {
-      this.loginMutationService
-        .mutate({ request: { email: data.email, password: data.password } })
-        .subscribe(
-          ({ data }) => {
-            const { loginUser } = data!;
-            localStorage.setItem(current_user, JSON.stringify(loginUser));
-            this.currentUserSubject.next(loginUser);
-            this.router.navigate(['']);
-          },
-          (error: HttpErrorResponse) => {
-            if (error.message.includes('credentials'))
-              alert('Wrong username or password');
-            else alert('something went wrong, please try again later');
-          }
-        );
-    }
+    // if (data && data.email && data.password) {
+    //   this.loginMutationService
+    //     .mutate({ request: { email: data.email, password: data.password } })
+    //     .subscribe(
+    //       ({ data }) => {
+    //         const { loginUser } = data!;
+    //         localStorage.setItem(current_user, JSON.stringify(loginUser));
+    //         this.currentUserSubject.next(loginUser);
+    //         this.router.navigate(['']);
+    //       },
+    //       (error: HttpErrorResponse) => {
+    //         if (error.message.includes('credentials'))
+    //           alert('Wrong username or password');
+    //         else alert('something went wrong, please try again later');
+    //       }
+    //     );
+    // }
   }
 
   logout() {
