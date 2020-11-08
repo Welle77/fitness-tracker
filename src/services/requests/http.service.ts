@@ -32,6 +32,23 @@ export class HttpService {
     ];
   };
 
+  public getWorkoutsForUser = (): Workout[] => {
+    return [
+      {
+        name: 'Workout 1',
+        exercises: this.getExercises(),
+      },
+      {
+        name: 'Workout 2',
+        exercises: this.getExercises(),
+      },
+      {
+        name: 'Workout 3',
+        exercises: this.getExercises(),
+      },
+    ];
+  };
+
   public getExercises = (): Exercise[] => {
     return [
       {

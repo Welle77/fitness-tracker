@@ -24,6 +24,13 @@ const routes: Routes = [
         (m) => m.CreateModule
       ),
   },
+  {
+    path: 'workoutlog',
+    loadChildren: () =>
+      import('./pages/workout/log-workout/log-workout.module').then(
+        (m) => m.LogWorkoutModule
+      ),
+  },
 ];
 
 @NgModule({
