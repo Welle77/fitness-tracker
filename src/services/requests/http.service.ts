@@ -19,14 +19,17 @@ export class HttpService {
     return [
       {
         name: 'Workout 1',
+        completed: 12,
         exercises: this.getExercises(),
       },
       {
         name: 'Workout 2',
+        completed: 2,
         exercises: this.getExercises(),
       },
       {
         name: 'Workout 3',
+        completed: 34,
         exercises: this.getExercises(),
       },
     ];
@@ -36,14 +39,17 @@ export class HttpService {
     return [
       {
         name: 'Workout 1',
+        completed: 12,
         exercises: this.getExercises(),
       },
       {
         name: 'Workout 2',
+        completed: 13,
         exercises: this.getExercises(),
       },
       {
         name: 'Workout 3',
+        completed: 14,
         exercises: this.getExercises(),
       },
     ];

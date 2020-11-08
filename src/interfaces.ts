@@ -8,6 +8,7 @@ export interface Exercise {
 
 export interface Workout {
   name: string;
+  completed: number;
   exercises: Exercise[];
 }
 

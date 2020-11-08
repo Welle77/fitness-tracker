@@ -15,4 +15,6 @@ export class LogWorkoutComponent implements OnInit {
   ngOnInit(): void {
     this.workouts = this.httpService.getWorkoutsForUser();
   }
+
+  public onLog = (wtf) => {};
 }

@@ -1,4 +1,10 @@
 .wrapper {
     display: grid;
     justify-content: center;
+    margin-top: 12px;
+}
+
+.line {
+    display: flex;
+    justify-content: space-between;
 }

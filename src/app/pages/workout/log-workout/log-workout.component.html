@@ -1,11 +1,28 @@
 <div class="wrapper">
-    <mat-selection-list>
+    <h1>Log which workout you made today</h1>
+    <mat-selection-list #workoutsList [multiple]="false">
         <mat-list-option *ngFor="let workout of workouts">
-            {{workout.name}}
+            <div class="line">
+                {{workout.name}}
+                <mat-icon aria-hidden="false" aria-label="Example home icon">fitness_center</mat-icon>
+            </div>
         </mat-list-option>
     </mat-selection-list>
 
     <div style="display: flex; justify-content: center;">
-        <button type="submit" mat-raised-button color="primary">Add workout</button>
+        <button [disabled]="workoutsList.selectedOptions.selected[0]?.value !== undefined" (click)="onLog(workoutsList.selectedOptions.selected[0])" mat-raised-button color="primary">Add to log</button>
     </div>
+
+
+    <h1 style="margin-top: 20px;">Earlier completed</h1>
+    <mat-list>
+        <mat-list-item class="line" *ngFor="let workout of workouts">
+            <div style="width: 100%;">
+                {{workout.name}}
+            </div>
+            <div>
+                {{workout.completed}}
+            </div>
+        </mat-list-item>
+    </mat-list>
 </div>
