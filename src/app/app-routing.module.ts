@@ -17,6 +17,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/start/start/start.module').then((m) => m.StartModule),
   },
+  {
+    path: 'create',
+    loadChildren: () =>
+      import('./pages/workout/create/create.module').then(
+        (m) => m.CreateModule
+      ),
+  },
 ];
 
 @NgModule({

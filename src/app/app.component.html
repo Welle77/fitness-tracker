@@ -9,11 +9,12 @@
 </mat-toolbar>
 
 <ng-template #loggedIn>
-    <mat-toolbar>
+    <mat-toolbar color="primary">
         <div style="display: flex; justify-content: space-between; width: 100%;">
             <span>{{title}}</span>
             <div>
-                <button mat-button routerLink="/login">Logout</button>
+                <button color="link" mat-button routerLink="/create">Create Workout</button>
+                <button color="link" mat-button routerLink="/login">Logout</button>
             </div>
         </div>
     </mat-toolbar>

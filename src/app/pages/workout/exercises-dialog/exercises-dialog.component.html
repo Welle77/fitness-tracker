@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Add exercise to {{data.workout.name}}</h1>
+<div class="wrapper" mat-dialog-content>
+    <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="name" required>
+                <mat-error *ngIf="name.invalid">Name is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="description" required>
+                <mat-error *ngIf="description.invalid">Description is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Sets</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="sets" required>
+                <mat-error *ngIf="sets.invalid">Sets is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Reps</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="reps" required>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Time</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="time" required>
+            </mat-form-field>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button [disabled]="exerciseForm.invalid" type="submit" mat-raised-button color="primary" [mat-dialog-close] cdkFocusInitial>Add Exercise</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+<h1 mat-dialog-title style="text-align: center;">Add workout</h1>
+<div class="wrapper" mat-dialog-content>
+
+    <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+        <div class="wrapper">
+            <mat-form-field appearance="outline">
+                <mat-label>Name of workout</mat-label>
+                <input matInput placeholder="Running" [formControl]="workoutName" required>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="description" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Sets</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="sets" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Reps</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="reps">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Time</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="time">
+        </mat-form-field>
+        <div style="display: flex; justify-content: center;">
+            <button [disabled]="workoutForm.invalid" type="submit" mat-raised-button color="primary" [mat-dialog-close] cdkFocusInitial>Add workout</button>
+        </div>
+    </form>
+</div>
