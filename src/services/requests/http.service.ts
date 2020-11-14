@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Exercise, User, Workout } from 'src/interfaces';
+import { createWorkout, getWorkout } from 'src/controllers/workoutController.js'
 
 @Injectable({
   providedIn: 'root',
@@ -36,23 +37,7 @@ export class HttpService {
   };
 
   public getWorkoutsForUser = (): Workout[] => {
-    return [
-      {
-        name: 'Workout 1',
-        completed: 12,
-        exercises: this.getExercises(),
-      },
-      {
-        name: 'Workout 2',
-        completed: 13,
-        exercises: this.getExercises(),
-      },
-      {
-        name: 'Workout 3',
-        completed: 14,
-        exercises: this.getExercises(),
-      },
-    ];
+    return getWorkout;
   };
 
   public getExercises = (): Exercise[] => {

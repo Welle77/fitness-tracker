@@ -9,6 +9,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": "^12.9.1",
+    "npm": "^6.11.3"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.2",
@@ -23,7 +27,9 @@
     "@angular/router": "~10.1.2",
     "dayjs": "^1.9.4",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "jwt-decode": "^3.0.0",
+    "mongoose": "^5.10.14",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

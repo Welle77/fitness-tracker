@@ -30,6 +30,10 @@ const workoutProgramSchema = new Schema({
     trim: true,
     required: true,
   },
+  completed: {
+    type: Number,
+    required: false,
+  },
   exercises: [exerciseSchema],
 });
 
