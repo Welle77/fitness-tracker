@@ -28,7 +28,7 @@ import { ExercisesDialogComponent } from '../exercises-dialog/exercises-dialog.c
   ],
 })
 export class CreateComponent implements OnInit {
-  dataSource: Workout[];
+  dataSource=  [];
   columnsToDisplay = ['name'];
   displayedColumns: string[] = ['name', 'description', 'sets', 'reps', 'time'];
   expandedElement: Exercise | null;

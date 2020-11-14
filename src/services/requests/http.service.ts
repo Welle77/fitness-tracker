@@ -1,66 +1,83 @@
 import { Injectable } from '@angular/core';
 import { Exercise, User, Workout } from 'src/interfaces';
 import { createWorkout, getWorkout } from 'src/controllers/workoutController.js'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { from, Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class HttpService {
-  constructor() {}
+  constructor( private http: HttpClient) {}
+
+  workouts: Workout[];
+  private baseUrl = 'http://localhost:4200';
+
 
   public getUser = (): User => {
     return {
       email: 'user@email.com',
       password: 'Passw0rd!',
-      workouts: this.getWorkouts(),
+      workouts: from(this.getWorkouts())
     };
+  }
+
+  public getWorkouts(): Observable<Workout[]> {
+    const url = `${this.baseUrl}/workouts`
+    return this.http.get<Workout[]>(url, {
+      headers: new HttpHeaders().set('Authorization', 'Bearer' + this.authentication.getToken())
+    })
+      .pipe(catchError(this.handleError<Workout[]>('getWorkouts', []))
+    );;
   };
 
-  public getWorkouts = (): Workout[] => {
-    return [
-      {
-        name: 'Workout 1',
-        completed: 12,
-        exercises: this.getExercises(),
-      },
-      {
-        name: 'Workout 2',
-        completed: 2,
-        exercises: this.getExercises(),
-      },
-      {
-        name: 'Workout 3',
-        completed: 34,
-        exercises: this.getExercises(),
-      },
-    ];
-  };
+  public createWorkout(workout: Workout): Observable<Workout>{
+  const url = `${this.baseUrl}/workouts`;
+  return this.http.post<Workout>(url,workout)
+}
+
+  public getExercises(): Observable<Exercise[]> {
+    const url = `${this.baseUrl}/exercises`
+    return this.http.get<Exercise[]>(url)
+      .pipe(catchError(this.handleError<Exercise[]>('getExercises', []))
+      );
+  } 
+
+  public createExercise(exercise: Exercise): Observable<Exercise>{
+    const url = `${this.baseUrl}/exercises`
+    return this.http.post<Exercise>(url,exercise);
+  }
+
+  showWorkout(id: string): Observable<Workout> {
+    const url = `${this.baseUrl}/exercises/${id}`;
+    return this.http.get<Workout>(url).pipe(
+      catchError(this.handleError<Workout>(`showWorkout id=${id}`))
+    );
+  }
 
   public getWorkoutsForUser = (): Workout[] => {
     return getWorkout;
   };
 
-  public getExercises = (): Exercise[] => {
-    return [
-      {
-        name: 'Exercise 1',
-        sets: 12,
-        time: 10,
-        description: 'this is Exercise 1',
-      },
-      {
-        name: 'Exercise 2',
-        sets: 22,
-        reps: 23,
-        description: 'this is Exercise 2',
-      },
-      {
-        name: 'Exercise 3',
-        sets: 2,
-        time: 3,
-        reps: 12,
-        description: 'this is Exercise 3',
-      },
-    ];
+
+/**
+* Handle Http operation that failed.
+* Let the app continue.
+* @param operation - name of the operation that failed
+* @param result - optional value to return as the observable result
+*/
+private handleError<T>(operation = 'operation', result?: T) {
+  return (error: any): Observable<T> => {
+  // TODO: send the error to remote logging infrastructure
+  console.error(error); // log to console instead
+  // Let the app keep running by returning an empty result.
+  return of(result as T);
   };
+
 }
+  }
+ 

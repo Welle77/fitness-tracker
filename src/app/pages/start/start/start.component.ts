@@ -26,7 +26,7 @@ import { HttpService } from 'src/services/requests/http.service';
   ],
 })
 export class StartComponent implements OnInit {
-  dataSource: Workout[];
+  dataSource = [];
   columnsToDisplay = ['name'];
   displayedColumns: string[] = ['name', 'description', 'sets', 'reps', 'time'];
   expandedElement: Exercise | null;
@@ -34,6 +34,13 @@ export class StartComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.dataSource = this.httpService.getWorkouts();
+   this.getWorkouts
+  }
+
+  private getWorkouts() {
+    this.httpService.getWorkouts().subscribe(
+      data => {
+        this.dataSource = data['workouts']
+    });
   }
 }
