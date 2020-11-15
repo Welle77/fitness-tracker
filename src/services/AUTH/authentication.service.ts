@@ -3,50 +3,43 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
+import { HttpService } from '../requests/http.service';
+import { tokenName } from '@angular/compiler';
 
 const current_user = 'current_user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private currentUserSubject: BehaviorSubject<{ token: string }>;
+  public currentUser: Observable<{ token: string }>;
 
-  constructor(private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem(current_user)!)
+  constructor(private router: Router, private httpService: HttpService) {
+    this.currentUserSubject = new BehaviorSubject<{ token: string }>(
+      JSON.parse(localStorage.getItem(current_user)!) ?? ''
     );
+    console.log(JSON.parse(localStorage.getItem(current_user)!));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): any {
-    return true;
-    //return this.currentUserSubject.value;
+  public get currentUserValue(): { token: string } {
+    return this.currentUserSubject.value;
   }
 
-  loginFromSignup(user: any) {
+  loginFromSignup(user: string) {
     localStorage.setItem(current_user, JSON.stringify(user!));
-    this.currentUserSubject.next(user);
+    this.currentUserSubject.next({ token: user });
     this.router.navigate(['']);
   }
 
-  login(data: any) {
-    // if (data && data.email && data.password) {
-    //   this.loginMutationService
-    //     .mutate({ request: { email: data.email, password: data.password } })
-    //     .subscribe(
-    //       ({ data }) => {
-    //         const { loginUser } = data!;
-    //         localStorage.setItem(current_user, JSON.stringify(loginUser));
-    //         this.currentUserSubject.next(loginUser);
-    //         this.router.navigate(['']);
-    //       },
-    //       (error: HttpErrorResponse) => {
-    //         if (error.message.includes('credentials'))
-    //           alert('Wrong username or password');
-    //         else alert('something went wrong, please try again later');
-    //       }
-    //     );
-    // }
+  login(email: string, password: string) {
+    if (email && password) {
+      this.httpService.login(email, password).subscribe((loginUser) => {
+        localStorage.setItem(current_user, JSON.stringify(loginUser));
+        this.currentUserSubject.next({ token: loginUser });
+        console.log(this.currentUserValue);
+        this.router.navigate(['']);
+      });
+    }
   }
 
   logout() {

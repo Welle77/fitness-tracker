@@ -9,7 +9,11 @@ import { StartModule } from './pages/start/start/start.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

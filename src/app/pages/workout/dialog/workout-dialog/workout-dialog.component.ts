@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { HttpService } from 'src/services/requests/http.service';
+import { Workout } from 'src/interfaces';
 
 @Component({
   selector: 'app-workout-dialog',
@@ -7,7 +9,10 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./workout-dialog.component.scss'],
 })
 export class WorkoutDialogComponent implements OnInit {
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private httpService: HttpService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -41,6 +46,21 @@ export class WorkoutDialogComponent implements OnInit {
   }
 
   public onSubmit = () => {
-    console.log('add workout');
+    const workout: Workout = {
+      name: this.workoutName.value,
+      completed: 0,
+      exercises: [
+        {
+          description: this.description.value,
+          name: this.name.value,
+          sets: this.sets.value,
+          reps: this.reps.value,
+          time: this.time.value,
+        },
+      ],
+    };
+    this.httpService.createWorkout(workout).subscribe((data) => {
+      this.httpService.getWorkouts();
+    });
   };
 }

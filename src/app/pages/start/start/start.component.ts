@@ -33,14 +33,11 @@ export class StartComponent implements OnInit {
 
   constructor(private httpService: HttpService) {}
 
-  ngOnInit(): void {
-   this.getWorkouts
-  }
+  ngOnInit(): void {}
 
   private getWorkouts() {
-    this.httpService.getWorkouts().subscribe(
-      data => {
-        this.dataSource = data['workouts']
+    this.httpService.getWorkouts().subscribe((data) => {
+      this.dataSource = data['workouts'];
     });
   }
 }

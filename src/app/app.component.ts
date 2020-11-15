@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUserValue;
+    this.authService.currentUser.subscribe(({ token }) => {
+      this.currentUser = token != '';
+    });
   }
 }

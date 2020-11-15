@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/services/AUTH/authentication.service';
+import { HttpService } from 'src/services/requests/http.service';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +11,14 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   public hide = true;
 
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private authService: AuthenticationService
+  ) {}
 
   public signupForm = this.formbuilder.group({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.pattern(strongRegex),
-    ]),
+    password: new FormControl('', [Validators.required]),
   });
 
   get email() {
@@ -28,7 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit = () => {
-    console.log('pressed');
+    console.log(this.email.value);
+    console.log(this.password.value);
+    this.authService.login(this.email.value, this.password.value);
   };
 
   public getErrorMessage = () => {

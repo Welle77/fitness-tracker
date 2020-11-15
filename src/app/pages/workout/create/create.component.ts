@@ -28,7 +28,7 @@ import { ExercisesDialogComponent } from '../exercises-dialog/exercises-dialog.c
   ],
 })
 export class CreateComponent implements OnInit {
-  dataSource=  [];
+  dataSource = [];
   columnsToDisplay = ['name'];
   displayedColumns: string[] = ['name', 'description', 'sets', 'reps', 'time'];
   expandedElement: Exercise | null;
@@ -36,7 +36,10 @@ export class CreateComponent implements OnInit {
   constructor(private httpService: HttpService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.dataSource = this.httpService.getWorkouts();
+    this.httpService.getWorkouts().subscribe((data) => {
+      this.dataSource = data;
+      console.log(data);
+    });
   }
 
   public onAddWorkoutClicked = () => {
