@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Exercise, User, Workout } from 'src/interfaces';
-import {
-  createWorkout,
-  getWorkout,
-} from 'src/controllers/workoutController.js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { from, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -39,7 +35,9 @@ export class HttpService {
   }
 
   public createExercise(exercise: Exercise): Observable<Exercise> {
+    console.log('createExercise called');
     const url = `${this.baseUrl}/exercises`;
+    console.log('url:', url);
     console.log(exercise);
     return this.http.post<Exercise>(url, exercise);
   }
@@ -52,12 +50,18 @@ export class HttpService {
   public login(email: string, password: string) {
     const url = `${this.baseUrl}/login`;
     console.log(url);
-    return this.http.post<string>(url, { email: email, password: password });
+    return this.http.post<any>(url, { email: email, password: password });
   }
 
-  public getWorkoutsForUser = (): Workout[] => {
-    return getWorkout;
-  };
+  public register(email: string, password: string) {
+    const url = `${this.baseUrl}/register`;
+    console.log(url);
+    return this.http.post<any>(url, {
+      name: email,
+      email: email,
+      password: password,
+    });
+  }
 
   /**
    * Handle Http operation that failed.

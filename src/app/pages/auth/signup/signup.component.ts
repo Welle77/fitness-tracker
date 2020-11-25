@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/services/AUTH/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,7 +10,10 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 export class SignupComponent implements OnInit {
   public hide = true;
 
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private authService: AuthenticationService
+  ) {}
 
   public signupForm = this.formbuilder.group({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,7 +32,8 @@ export class SignupComponent implements OnInit {
   }
 
   public onSubmit = () => {
-    console.log('pressed');
+    console.log('signup form posted: ');
+    this.authService.register(this.email.value, this.password.value);
   };
 
   public getErrorMessage = () => {

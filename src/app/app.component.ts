@@ -11,11 +11,19 @@ export class AppComponent implements OnInit {
 
   title = 'fitness-tracker';
 
-  constructor(private authService: AuthenticationService) {}
+  Logout() {
+    this.authService.logout();
+  }
+
+  constructor(private authService: AuthenticationService) {
+    authService.itemValue.subscribe((currentUser) => {
+      console.log('entered', currentUser);
+      this.currentUser = currentUser != '';
+    });
+  }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(({ token }) => {
-      this.currentUser = token != '';
-    });
+    console.log('inittoken: ', this.authService.getToken());
+    this.currentUser = this.authService.getToken() != '';
   }
 }

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   public onSubmit = () => {
     console.log(this.email.value);
     console.log(this.password.value);
-    this.authService.login(this.email.value, this.password.value);
+    this.authService.login(this.email.value, this.password.value) ;
   };
 
   public getErrorMessage = () => {

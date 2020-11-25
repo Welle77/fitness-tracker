@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Workout } from 'src/interfaces';
+import { AuthenticationService } from 'src/services/AUTH/authentication.service';
 import { HttpService } from 'src/services/requests/http.service';
 
 @Component({
@@ -13,8 +14,12 @@ export class LogWorkoutComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.workouts = this.httpService.getWorkoutsForUser();
+    this.httpService.getWorkouts().subscribe((data) => {
+      this.workouts = data;
+    });
   }
 
-  public onLog = (wtf) => {};
+  public onLog = (wtf) => {
+    console.log('wtf: ', wtf);
+  };
 }

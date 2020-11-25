@@ -10,7 +10,7 @@
     </mat-selection-list>
 
     <div style="display: flex; justify-content: center;">
-        <button [disabled]="workoutsList.selectedOptions.selected[0]?.value !== undefined" (click)="onLog(workoutsList.selectedOptions.selected[0])" mat-raised-button color="primary">Add to log</button>
+        <button [disabled]="workoutsList.selectedOptions.selected[0]?.value !== undefined" (click)="onLog(workoutsList.selectedOptions.value)" mat-raised-button color="primary">Add to log</button>
     </div>
 
 

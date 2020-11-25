@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Exercise, Workout } from 'src/interfaces';
 import { HttpService } from 'src/services/requests/http.service';
 
@@ -13,7 +14,8 @@ export class ExercisesDialogComponent implements OnInit {
   constructor(
     private formbuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: { workout: Workout },
-    private httpService: HttpService
+    private httpService: HttpService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -44,13 +46,16 @@ export class ExercisesDialogComponent implements OnInit {
   }
 
   public onSubmit = () => {
+    console.log('test for workoutid: ', this.data.workout._id);
     const exercise: Exercise = {
       description: this.description.value,
       name: this.name.value,
       sets: this.sets.value,
       reps: this.reps.value,
       time: this.time.value,
+      Workout: this.data.workout._id,
     };
-    this.httpService.createExercise(exercise);
+    this.httpService.createExercise(exercise).subscribe();
+    location.reload();
   };
 }

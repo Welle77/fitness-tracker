@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
@@ -11,42 +11,71 @@ const current_user = 'current_user';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<{ token: string }>;
-  public currentUser: Observable<{ token: string }>;
+  itemValue = new Subject<string>();
 
   constructor(private router: Router, private httpService: HttpService) {
+    console.log('LocalStorage: ', localStorage);
     this.currentUserSubject = new BehaviorSubject<{ token: string }>(
       JSON.parse(localStorage.getItem(current_user)!) ?? ''
     );
-    console.log(JSON.parse(localStorage.getItem(current_user)!));
-    this.currentUser = this.currentUserSubject.asObservable();
+    console.log('herfra: ', JSON.parse(localStorage.getItem(current_user)!));
   }
 
   public get currentUserValue(): { token: string } {
     return this.currentUserSubject.value;
   }
 
+  get currentUser() {
+    return localStorage.getItem(current_user);
+  }
+
   loginFromSignup(user: string) {
     localStorage.setItem(current_user, JSON.stringify(user!));
-    this.currentUserSubject.next({ token: user });
+    this.itemValue.next(user);
     this.router.navigate(['']);
   }
 
   login(email: string, password: string) {
     if (email && password) {
       this.httpService.login(email, password).subscribe((loginUser) => {
-        localStorage.setItem(current_user, JSON.stringify(loginUser));
+        console.log('jwt: ', loginUser.token);
+        this.saveToken(loginUser.token);
+        this.itemValue.next(loginUser.token);
         this.currentUserSubject.next({ token: loginUser });
-        console.log(this.currentUserValue);
-        this.router.navigate(['']);
+        console.log('currentuser: ', this.currentUserSubject);
+        this.router.navigate(['/create']);
       });
+    }
+  }
+
+  register(email: string, password: string) {
+    if (email && password) {
+      this.httpService.register(email, password).subscribe((data) => {
+        console.log('from signUP: ', data);
+        this.router.navigate(['/login']);
+      });
+    }
+  }
+
+  private saveToken(token: string) {
+    window.localStorage['fitness-token'] = token;
+  }
+
+  public getToken(): string {
+    if (window.localStorage['fitness-token']) {
+      return window.localStorage['fitness-token'];
+    } else {
+      return '';
     }
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem(current_user);
+    console.log('logging you out');
+    localStorage.removeItem('fitness-token');
+    this.itemValue.next('');
     this.currentUserSubject.next(null);
-    this.router.navigate['/'];
+    this.router.navigate(['/login']);
   }
 
   public isTokenValid() {

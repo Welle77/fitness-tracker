@@ -4,10 +4,12 @@ export interface Exercise {
   sets: number;
   reps?: number;
   time?: number;
+  Workout: string;
 }
 
 export interface Workout {
   name: string;
+  _id: string;
   completed: number;
   exercises: Exercise[];
 }
