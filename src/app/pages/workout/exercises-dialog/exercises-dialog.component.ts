@@ -46,6 +46,7 @@ export class ExercisesDialogComponent implements OnInit {
   }
 
   public onSubmit = () => {
+    console.log('entered an exercise');
     console.log('test for workoutid: ', this.data.workout._id);
     const exercise: Exercise = {
       description: this.description.value,
@@ -55,7 +56,8 @@ export class ExercisesDialogComponent implements OnInit {
       time: this.time.value,
       Workout: this.data.workout._id,
     };
-    this.httpService.createExercise(exercise).subscribe();
-    location.reload();
+    this.httpService.createExercise(exercise).subscribe((data) => {
+      location.reload();
+    });
   };
 }

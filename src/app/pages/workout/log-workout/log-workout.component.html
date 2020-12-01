@@ -1,7 +1,7 @@
 <div class="wrapper">
     <h1>Log which workout you made today</h1>
     <mat-selection-list #workoutsList [multiple]="false">
-        <mat-list-option *ngFor="let workout of workouts">
+        <mat-list-option *ngFor="let workout of workouts" [value]="workout">
             <div class="line">
                 {{workout.name}}
                 <mat-icon aria-hidden="false" aria-label="Example home icon">fitness_center</mat-icon>
@@ -10,7 +10,7 @@
     </mat-selection-list>
 
     <div style="display: flex; justify-content: center;">
-        <button [disabled]="workoutsList.selectedOptions.selected[0]?.value !== undefined" (click)="onLog(workoutsList.selectedOptions.value)" mat-raised-button color="primary">Add to log</button>
+        <button [disabled]="workoutsList.selectedOptions.selected?.length === 0" (click)="onLog(workoutsList.selectedOptions.selected[0]?.value)" mat-raised-button color="primary">Add to log</button>
     </div>
 
 

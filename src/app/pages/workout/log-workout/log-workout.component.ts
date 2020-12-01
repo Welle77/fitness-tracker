@@ -21,5 +21,8 @@ export class LogWorkoutComponent implements OnInit {
 
   public onLog = (wtf) => {
     console.log('wtf: ', wtf);
+    this.httpService.logWorkout(wtf).subscribe((data) => {
+      location.reload();
+    });
   };
 }

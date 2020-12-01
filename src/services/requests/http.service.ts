@@ -12,11 +12,19 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   workouts: Workout[];
-  private baseUrl = 'http://localhost:3000';
+  //private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://sheltered-spire-84035.herokuapp.com';
 
   public getUser(): Observable<User> {
     const url = `${this.baseUrl}/user`;
     return this.http.get<User>(url);
+  }
+
+  public logWorkout(workout: Workout): Observable<Workout[]> {
+    const url = `${this.baseUrl}/log`;
+    console.log('url: ', url);
+    console.log('workout: ', workout);
+    return this.http.post<Workout[]>(url, workout);
   }
 
   public getWorkouts(): Observable<Workout[]> {
